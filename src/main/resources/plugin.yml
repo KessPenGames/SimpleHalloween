@@ -1,0 +1,26 @@
+name: SimpleHalloween
+version: ${project.version}
+main: simple.halloween.main.Main
+api-version: 1.17
+authors: [ KessPenGames ]
+description: Плагин на хэллоуин для ивента и для сервера ForScore
+commands:
+  halloween:
+    description: Включает/Отключает ужас
+    permission: simple.halloween.halloween
+permissions:
+  simple.halloween.*:
+    description: Доступ ко всему
+    children:
+      simple.halloween.halloween.*: true
+  simple.halloween.halloween.*:
+    description: Доступ к хэллоуину
+    children:
+      simple.halloween.halloween.start: true
+      simple.halloween.halloween.stop: true
+  simple.halloween.halloween.start:
+    description: Начать ужас вне дет дома
+    default: op
+  simple.halloween.halloween.stop:
+    description: Начать ужас вне дет дома
+    default: op
