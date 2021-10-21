@@ -1,9 +1,6 @@
 package simple.halloween.main;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
@@ -81,6 +78,12 @@ public class LeaveCount implements Listener {
         if (list.isEmpty()) return;
         if (list.get(0).equals("true")) {
             Player player = event.getPlayer();
+
+            File death_list = new File(plugin.getDataFolder() + File.separator + "death.yml");
+            FileConfiguration death_logs = YamlConfiguration.loadConfiguration(death_list);
+            List<String> listik = death_logs.getStringList(player.getName());
+            if (!listik.isEmpty()) player.kickPlayer(ChatColor.RED + "Вас поглотила тьма\n(ждите межсезонья)");
+
             File players = new File(plugin.getDataFolder() + File.separator + "players.yml");
             FileConfiguration p_logs = YamlConfiguration.loadConfiguration(players);
             List<String> p_list = p_logs.getStringList(player.getName());
@@ -89,28 +92,15 @@ public class LeaveCount implements Listener {
                 String leave = p_list.get(0);
                 String[] leave1 = leave.split("Leave: ");
                 int aboba = Integer.parseInt(leave1[1]);
-                if (aboba > 2) {
+                int leavecount = plugin.getConfig().getInt("leave-count");
+                if (aboba > leavecount) {
                     Random random = new Random();
                     int health = random.ints(20, 100).findFirst().getAsInt();
                     int rand = random.ints(1, 100).findFirst().getAsInt();
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 41) {
-                        LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        entity.setCanPickupItems(true);
-                        entity.setMaxHealth(100.0F);
-                        entity.setHealth(health + .0F);
-                        entity.getEquipment().setHelmet(plugin.pumpkin());
-                        if (rand < 71) {
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 1));
-                        }
-                        for (Player other : Bukkit.getOnlinePlayers()) {
-                            if (other.getLocation().distance(entity.getLocation()) <= 50) {
-                                entity.attack(other);
-                            }
-                        }
-                    } else if (spawn < 61) {
+                    if (spawn < 61) {
                         for (int i = 1; 3 > i; i++) {
                             LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.SKELETON);
                             entity.setCanPickupItems(true);
@@ -295,17 +285,6 @@ public class LeaveCount implements Listener {
                                 }
                             }
                         }
-                    } else if (spawn == 100) {
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
                     } else {
                         za_warudo.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                         za_warudo.spawnEntity(player.getLocation(), EntityType.ZOMBIE);

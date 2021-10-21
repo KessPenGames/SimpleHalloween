@@ -1,8 +1,11 @@
 package simple.halloween.main;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,14 +46,15 @@ public class HalloweenCommand implements CommandExecutor, Listener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            for (Player other : Bukkit.getOnlinePlayers()) {
+                if (other.getLocation().distance(((Player) sender).getPlayer().getLocation()) <= 50) {
+                    ((Player) sender).getPlayer().playSound(((Player) sender).getPlayer().getLocation(),
+                            Sound.ENTITY_ENDER_DRAGON_GROWL, 120.0F, 0);
+                    ((Player) sender).getPlayer().playSound(((Player) sender).getPlayer().getLocation(),
+                            Sound.ENTITY_ENDER_DRAGON_AMBIENT, 120.0F, 0);
+                }
+            }
 
-            Bukkit.broadcastMessage(ChatColor.BLACK + "Да начн" + ChatColor.MAGIC + "ётся весе" + ChatColor.BLACK + "лье!");
-
-            Bukkit.getWorld("world").setAmbientSpawnLimit(0);
-            Bukkit.getWorld("world").setAnimalSpawnLimit(0);
-            Bukkit.getWorld("world").setWaterAmbientSpawnLimit(0);
-            Bukkit.getWorld("world").setWaterAnimalSpawnLimit(0);
-            Bukkit.getWorld("world").setMonsterSpawnLimit(80);
             Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             Bukkit.getWorld("world").setTime(20000);
         } else if (args[0].equals("stop")) {
@@ -69,10 +73,11 @@ public class HalloweenCommand implements CommandExecutor, Listener {
                 e.printStackTrace();
             }
 
-            Bukkit.broadcastMessage(ChatColor.BLACK + "Упс... походу измерением ошиблись...");
-
             Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
             Bukkit.getWorld("world").setTime(0);
+        } else if (args[0].equals("reload")) {
+            plugin.reloadConfig();
+            sender.sendMessage(ChatColor.GREEN + "Конфиг плагина успешно перезагружён!");
         } else {
             sender.sendMessage(ChatColor.RED + "Вы не правильно ввели комманду!");
         }

@@ -43,12 +43,15 @@ public class PlayerMove implements Listener {
                 String world_name = event.getPlayer().getWorld().getName();
                 if (!world_name.equals("world")) event.getPlayer().setHealth(0.0D);
                 Location coords = event.getPlayer().getLocation();
-                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
-                if (coords.getY() > 89) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
+                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2));
+                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
+                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 1));
+                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
                 if (coords.getWorld().getBlockAt(coords).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
                 if (coords.getWorld().getBlockAt((int) coords.getX(), (int) coords.getY() - 1, (int) coords.getZ()).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
 
-                int cooldownTime = 25;
+                int walktime = plugin.getConfig().getInt("walk-time");
+                int cooldownTime = walktime;
                 if(cooldowns.containsKey(event.getPlayer().getName())) {
                     long secondsLeft = ((cooldowns.get(event.getPlayer().getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
                     if(secondsLeft>0) {
@@ -76,21 +79,7 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 6) {
-                        LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        entity.setCanPickupItems(true);
-                        entity.setMaxHealth(100.0F);
-                        entity.setHealth(health + .0F);
-                        entity.getEquipment().setHelmet(plugin.pumpkin());
-                        if (rand < 71) {
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 1));
-                        }
-                        for (Player other : Bukkit.getOnlinePlayers()) {
-                            if (other.getLocation().distance(entity.getLocation()) <= 50) {
-                                entity.attack(other);
-                            }
-                        }
-                    } else if (spawn < 16) {
+                    if (spawn < 16) {
                         for (int i = 1; 3 > i; i++) {
                             LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.SKELETON);
                             entity.setCanPickupItems(true);
@@ -214,17 +203,6 @@ public class PlayerMove implements Listener {
                                 entity.attack(other);
                             }
                         }
-                    } else if (spawn == 100) {
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
                     } else {
                         LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                         entity.setCanPickupItems(true);
@@ -293,21 +271,7 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 6) {
-                        LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        entity.setCanPickupItems(true);
-                        entity.setMaxHealth(100.0F);
-                        entity.setHealth(health + .0F);
-                        entity.getEquipment().setHelmet(plugin.pumpkin());
-                        if (rand < 71) {
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 1));
-                        }
-                        for (Player other : Bukkit.getOnlinePlayers()) {
-                            if (other.getLocation().distance(entity.getLocation()) <= 50) {
-                                entity.attack(other);
-                            }
-                        }
-                    } else if (spawn < 16) {
+                    if (spawn < 16) {
                         for (int i = 1; 3 > i; i++) {
                             LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.SKELETON);
                             entity.setCanPickupItems(true);
@@ -528,21 +492,7 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 6) {
-                        LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        entity.setCanPickupItems(true);
-                        entity.setMaxHealth(100.0F);
-                        entity.setHealth(health + .0F);
-                        entity.getEquipment().setHelmet(plugin.pumpkin());
-                        if (rand < 71) {
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 1));
-                        }
-                        for (Player other : Bukkit.getOnlinePlayers()) {
-                            if (other.getLocation().distance(entity.getLocation()) <= 50) {
-                                entity.attack(other);
-                            }
-                        }
-                    } else if (spawn < 16) {
+                    if (spawn < 16) {
                         for (int i = 1; 3 > i; i++) {
                             LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.SKELETON);
                             entity.setCanPickupItems(true);
@@ -762,21 +712,7 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 6) {
-                        LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        entity.setCanPickupItems(true);
-                        entity.setMaxHealth(100.0F);
-                        entity.setHealth(health + .0F);
-                        entity.getEquipment().setHelmet(plugin.pumpkin());
-                        if (rand < 71) {
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999999, 1));
-                        }
-                        for (Player other : Bukkit.getOnlinePlayers()) {
-                            if (other.getLocation().distance(entity.getLocation()) <= 50) {
-                                entity.attack(other);
-                            }
-                        }
-                    } else if (spawn < 16) {
+                    if (spawn < 16) {
                         for (int i = 1; 3 > i; i++) {
                             LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.SKELETON);
                             entity.setCanPickupItems(true);
@@ -900,17 +836,6 @@ public class PlayerMove implements Listener {
                                 entity.attack(other);
                             }
                         }
-                    } else if (spawn == 100) {
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
-                        za_warudo.spawnEntity(player.getLocation(), EntityType.CREEPER);
                     } else {
                         LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(player.getLocation(), EntityType.ZOMBIE);
                         entity.setCanPickupItems(true);

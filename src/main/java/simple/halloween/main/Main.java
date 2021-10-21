@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,11 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        mob_wl.add("ZOMBIE");
-        mob_wl.add("SKELETON");
-        mob_wl.add("CREEPER");
-        mob_wl.add("SPIDER");
+        File config = new File(getDataFolder() + File.separator + "config.yml");
+        if(!config.exists()) {
+            getConfig().options().copyDefaults(true);
+            saveDefaultConfig();
+        }
 
         Bukkit.getPluginManager().registerEvents(new MobsSpawn(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMove(this), this);
@@ -24,7 +26,10 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CreeperExplosion(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeath(this), this);
         Bukkit.getPluginManager().registerEvents(new LeaveCount(this), this);
+        Bukkit.getPluginManager().registerEvents(new EnderpearlDisable(this), this);
+        Bukkit.getPluginManager().registerEvents(new GappleDisable(this), this);
         getCommand("halloween").setExecutor(new HalloweenCommand(this));
+        getCommand("halloween").setTabCompleter(new HalloweenTab(this));
         getLogger().info("Started up!");
     }
 
