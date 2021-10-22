@@ -37,8 +37,6 @@ public class PlayerDeath implements Listener {
                 ent.setCanPickupItems(true);
                 ent.setCustomName(event.getEntity().getName());
                 ent.setCustomNameVisible(true);
-                ent.setMaxHealth(100.0F);
-                ent.setHealth(40.0F);
                 ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                 ent.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999, 2));
                 Random random = new Random();

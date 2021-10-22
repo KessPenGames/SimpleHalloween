@@ -46,8 +46,6 @@ public class MobsSpawn implements Listener {
                 if (coords.getY() > 109) return;
                 if (rand > 85) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.CAVE_SPIDER);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     if (rand > 70) {
                         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
@@ -59,8 +57,6 @@ public class MobsSpawn implements Listener {
                     }
                 } else if (rand > 80) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.SPIDER);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     if (rand > 70) {
                         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
@@ -72,10 +68,12 @@ public class MobsSpawn implements Listener {
                     }
                 } else if (rand > 75) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.ZOMBIE);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
+                    ent.getEquipment().setChestplateDropChance(0.0F);
+                    ent.getEquipment().setLeggingsDropChance(0.0F);
+                    ent.getEquipment().setBootsDropChance(0.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -127,10 +125,12 @@ public class MobsSpawn implements Listener {
                     }
                 } else if (rand > 60) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.SKELETON);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
+                    ent.getEquipment().setChestplateDropChance(0.0F);
+                    ent.getEquipment().setLeggingsDropChance(0.0F);
+                    ent.getEquipment().setBootsDropChance(0.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -194,38 +194,30 @@ public class MobsSpawn implements Listener {
                     }
                 } else if (rand > 50) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.CREEPER);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     if (rand > 50) {
                         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                     }
                 } else if (rand > 45) {
-                    LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.WITCH);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
+                    event.getEntity().getWorld().spawnEntity(coords, EntityType.WITCH);
                 } else if (rand > 35) {
-                    LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.HUSK);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
+                    event.getEntity().getWorld().spawnEntity(coords, EntityType.HUSK);
                 } else if (rand > 30) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.STRAY);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     if (rand > 40) {
                         ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                     }
                 } else if (rand > 20) {
-                    LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.EVOKER);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
+                    event.getEntity().getWorld().spawnEntity(coords, EntityType.EVOKER);
                 } else if (rand > 15) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.WITHER_SKELETON);
-                    ent.setMaxHealth(100.0F);
-                    ent.setHealth(health + .0F);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
+                    ent.getEquipment().setChestplateDropChance(0.0F);
+                    ent.getEquipment().setLeggingsDropChance(0.0F);
+                    ent.getEquipment().setBootsDropChance(0.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();

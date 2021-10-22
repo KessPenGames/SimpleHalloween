@@ -26,6 +26,7 @@ public class GappleDisable implements Listener {
             if (event.getPlayer().getGameMode().toString().equals("SURVIVAL")) {
                 if (event.getItem().getType() == Material.GOLDEN_APPLE) event.setCancelled(true);
                 if (event.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE) event.setCancelled(true);
+                if (event.getItem().getType() == Material.GOLDEN_CARROT) event.setCancelled(true);
             }
         }
     }
