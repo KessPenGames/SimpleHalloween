@@ -48,7 +48,7 @@ public class PlayerMove implements Listener {
                 if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2));
                 if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
                 if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 1));
-                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
+                if (coords.getY() > 119) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
                 if (coords.getWorld().getBlockAt(coords).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
                 if (coords.getWorld().getBlockAt((int) coords.getX(), (int) coords.getY() - 1, (int) coords.getZ()).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
 
