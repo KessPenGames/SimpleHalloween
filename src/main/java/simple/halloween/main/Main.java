@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,33 @@ public final class Main extends JavaPlugin {
         if(!config.exists()) {
             getConfig().options().copyDefaults(true);
             saveDefaultConfig();
+        }
+
+        File halloween = new File(getDataFolder() + File.separator + "halloween.yml");
+        if(!halloween.exists()) {
+            try {
+                halloween.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File death = new File(getDataFolder() + File.separator + "death.yml");
+        if(!death.exists()) {
+            try {
+                death.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File players = new File(getDataFolder() + File.separator + "players.yml");
+        if(!players.exists()) {
+            try {
+                players.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Bukkit.getPluginManager().registerEvents(new MobsSpawn(this), this);

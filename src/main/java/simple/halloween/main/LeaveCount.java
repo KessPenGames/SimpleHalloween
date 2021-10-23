@@ -105,7 +105,7 @@ public class LeaveCount implements Listener {
                     int sx = (int) (player.getLocation().getX() + 10);
                     int sz = (int) player.getLocation().getZ();
                     int sy = player.getWorld().getHighestBlockYAt(sx, sz);
-                    Location loc = za_warudo.getBlockAt(sx, sy, sz).getLocation();
+                    Location loc = za_warudo.getBlockAt(sx, sy + 1, sz).getLocation();
 
                     if (spawn < 61) {
                         for (int i = 1; 3 > i; i++) {
@@ -172,11 +172,6 @@ public class LeaveCount implements Listener {
                             } else if (rand > 40) {
                                 ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             }
-
-                            rand = random.ints(1, 100).findFirst().getAsInt();
-                            if (rand > 50) {
-                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                            }
                         }
                     } else if (spawn < 71) {
                         LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
@@ -241,11 +236,6 @@ public class LeaveCount implements Listener {
                             ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                         } else if (rand > 40) {
                             ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
-                        }
-
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 50) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                         }
                     } else if (spawn < 81) {
                         for (int i = 1; 5 > i; i++) {
