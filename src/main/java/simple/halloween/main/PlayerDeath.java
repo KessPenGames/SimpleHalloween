@@ -1,5 +1,7 @@
 package simple.halloween.main;
 
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,9 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class PlayerDeath implements Listener {
     private Main plugin;
@@ -48,19 +48,10 @@ public class PlayerDeath implements Listener {
                 else if (85 > rand) death = "съедена";
                 event.setDeathMessage(ChatColor.RED + "Душа " + event.getEntity().getName() + " была " + death);
 
-                File death_list = new File(plugin.getDataFolder() + File.separator + "death.yml");
-                FileConfiguration death_logs = YamlConfiguration.loadConfiguration(death_list);
-                List<String> listik = new ArrayList<String>();
-                listik.add("true");
-
-                death_logs.set(event.getEntity().getName(), listik);
-                try {
-                    death_logs.save(death_list);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                event.getEntity().kickPlayer(ChatColor.RED + "Вас поглотила тьма\n (ждите межсезонья)");
+                Date date = new GregorianCalendar(2022, Calendar.SEPTEMBER, 20).getTime();
+                Bukkit.getBanList(BanList.Type.NAME).addBan(event.getEntity().getName(), ChatColor.RED + "Вас поглотила тьма\n(ждите межсезонья)",
+                        date, ChatColor.BLACK + "" + ChatColor.MAGIC + "Шлёпа шлёпский");
+                event.getEntity().kickPlayer(ChatColor.RED + "Вас поглотила тьма\n(ждите межсезонья)");
             }
         }
     }

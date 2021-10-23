@@ -30,15 +30,6 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        File death = new File(getDataFolder() + File.separator + "death.yml");
-        if(!death.exists()) {
-            try {
-                death.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         File players = new File(getDataFolder() + File.separator + "players.yml");
         if(!players.exists()) {
             try {

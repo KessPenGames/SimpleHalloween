@@ -6,7 +6,7 @@
 
     <groupId>simple.halloween.main</groupId>
     <artifactId>SimpleHalloween</artifactId>
-    <version>1.3</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>SimpleHalloween</name>
