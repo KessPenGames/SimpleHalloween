@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -43,11 +44,32 @@ public class PlayerMove implements Listener {
             if (list.isEmpty()) return;
             if (list.get(0).equals("true")) {
                 String world_name = event.getPlayer().getWorld().getName();
+
                 if (!world_name.equals("world")) event.getPlayer().setHealth(0.0D);
+
                 Location coords = event.getPlayer().getLocation();
-                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2));
-                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
-                if (coords.getY() < 57) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 1));
+                if (coords.getY() < 60) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
+                if (coords.getY() < 60) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 1));
+                if (coords.getY() < 55) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 1));
+                if (coords.getY() < 55) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
+                if (coords.getY() < 55) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 2));
+                if (coords.getY() < 50) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2));
+                if (coords.getY() < 50) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2));
+                if (coords.getY() < 50) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 2));
+                if (coords.getY() < 45) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 2));
+                if (coords.getY() > 79) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
+                if (coords.getY() > 79) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 1));
+                if (coords.getY() > 89) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1));
+                if (coords.getY() > 89) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 2));
+                if (coords.getY() > 89) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 1));
+                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2));
+                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 2));
+                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2));
+                if (coords.getY() > 99) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 300, 1));
+                if (coords.getY() > 109) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2));
+                if (coords.getY() > 109) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 3));
+                if (coords.getY() > 109) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 3));
+                if (coords.getY() > 109) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 300, 2));
                 if (coords.getY() > 119) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2));
                 if (coords.getWorld().getBlockAt(coords).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
                 if (coords.getWorld().getBlockAt((int) coords.getX(), (int) coords.getY() - 1, (int) coords.getZ()).getType() == Material.WATER) event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
@@ -86,10 +108,11 @@ public class PlayerMove implements Listener {
                 String[] zz = coordi[2].split("\\.");
                 int x = Integer.parseInt(xx[0]);
                 int z = Integer.parseInt(zz[0]);
-                int sx = (int) (player.getLocation().getX() + 10);
+                int sx = (int) (player.getLocation().getX() + 20);
                 int sz = (int) player.getLocation().getZ();
                 int sy = player.getWorld().getHighestBlockYAt(sx, sz);
                 Location loc = player.getWorld().getBlockAt(sx, sy + 1, sz).getLocation();
+                if (plugin.countmobs(player.getLocation()) > 59) return;
                 if (coords.getX() < x + 10) {
                     Random random = new Random();
                     int health = random.ints(20, 100).findFirst().getAsInt();
@@ -97,15 +120,128 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 61) {
-                        for (int i = 1; 3 > i; i++) {
+                    if (spawn > 85) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CAVE_SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 80) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 75) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 60) {
+                        for (int i = 1; 6 > i; i++) {
                             LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
                             ent.getEquipment().setHelmet(plugin.pumpkin());
                             ent.getEquipment().setHelmetDropChance(80.0F);
-                            ent.getEquipment().setChestplateDropChance(0.0F);
-                            ent.getEquipment().setLeggingsDropChance(0.0F);
-                            ent.getEquipment().setBootsDropChance(0.0F);
-                            ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
                             ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -162,203 +298,217 @@ public class PlayerMove implements Listener {
                             } else if (rand > 40) {
                                 ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             }
-                        }
-                    } else if (spawn < 71) {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
-                        ent.getEquipment().setHelmet(plugin.pumpkin());
-                        ent.getEquipment().setHelmetDropChance(80.0F);
-                        ent.getEquipment().setChestplateDropChance(0.0F);
-                        ent.getEquipment().setLeggingsDropChance(0.0F);
-                        ent.getEquipment().setBootsDropChance(0.0F);
-                        ent.getEquipment().setItemInMainHandDropChance(0.0F);
-                        ent.setCanPickupItems(true);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        int ench = random.ints(0, 4).findFirst().getAsInt();
-                        if (rand > 80) {
-                            ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                        } else if (rand > 75) {
-                            ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                        } else if (rand > 65) {
-                            ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-                        } else if (rand > 50) {
-                            ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
-                        } else if (rand > 40) {
-                            ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                        } else if (rand > 30) {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                        } else {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-                        }
 
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 60) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                        } else if (rand > 40) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
-                    } else if (spawn < 81) {
-                        for (int i = 1; 5 > i; i++) {
-                            LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                            entity.getEquipment().setHelmet(plugin.pumpkin());
-                            entity.getEquipment().setHelmetDropChance(80.0F);
-                            entity.getEquipment().setChestplateDropChance(0.0F);
-                            entity.getEquipment().setLeggingsDropChance(0.0F);
-                            entity.getEquipment().setBootsDropChance(0.0F);
-                            entity.getEquipment().setItemInMainHandDropChance(0.0F);
-                            entity.setCanPickupItems(true);
+                    } else if (spawn > 50) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CREEPER);
+                        rand = random.ints(1, 100).findFirst().getAsInt();
+                    } else if (spawn > 45) {
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                    } else if (spawn > 35) {
+                        for (int i = 1; 16 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.HUSK);
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 30) {
+                        for (int i = 1; 9 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.STRAY);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 40) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 20) {
+                        za_warudo.spawnEntity(loc, EntityType.EVOKER);
+                    } else if (spawn > 15) {
+                        for (int i = 1; 4 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.WITHER_SKELETON);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
                             } else if (rand > 75) {
                                 ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                                entity.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
                             } else if (rand > 65) {
                                 ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
                             } else if (rand > 50) {
                                 ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
                             } else if (rand > 40) {
                                 ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                             } else if (rand > 30) {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setChestplate(aboba);
                             } else {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
                             }
 
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                             } else if (rand > 75) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             } else if (rand > 70) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
                             } else if (rand > 60) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
                             } else if (rand > 55) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
                             } else if (rand > 45) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
                             } else if (rand > 30) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
                             } else if (rand > 25) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
                             } else if (rand > 20) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
                             } else {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                             }
                         }
+                    } else if (spawn < 5) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.RAVAGER);
+                        ent.setMaxHealth(1000.0F);
+                        ent.setHealth(1000.0F);
                     } else {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                        for (int i = 1; 11 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
                     }
                     prosto = 1;
@@ -369,15 +519,128 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 61) {
-                        for (int i = 1; 3 > i; i++) {
+                    if (spawn > 85) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CAVE_SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 80) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 75) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 60) {
+                        for (int i = 1; 6 > i; i++) {
                             LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
                             ent.getEquipment().setHelmet(plugin.pumpkin());
                             ent.getEquipment().setHelmetDropChance(80.0F);
-                            ent.getEquipment().setChestplateDropChance(0.0F);
-                            ent.getEquipment().setLeggingsDropChance(0.0F);
-                            ent.getEquipment().setBootsDropChance(0.0F);
-                            ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
                             ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -434,226 +697,217 @@ public class PlayerMove implements Listener {
                             } else if (rand > 40) {
                                 ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             }
-                        }
-                    } else if (spawn < 71) {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
-                        ent.getEquipment().setHelmet(plugin.pumpkin());
-                        ent.getEquipment().setHelmetDropChance(80.0F);
-                        ent.getEquipment().setChestplateDropChance(0.0F);
-                        ent.getEquipment().setLeggingsDropChance(0.0F);
-                        ent.getEquipment().setBootsDropChance(0.0F);
-                        ent.getEquipment().setItemInMainHandDropChance(0.0F);
-                        ent.setCanPickupItems(true);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        int ench = random.ints(0, 4).findFirst().getAsInt();
-                        if (rand > 80) {
-                            ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                        } else if (rand > 75) {
-                            ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                        } else if (rand > 65) {
-                            ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-                        } else if (rand > 50) {
-                            ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
-                        } else if (rand > 40) {
-                            ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                        } else if (rand > 30) {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                        } else {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-                        }
 
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 60) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                        } else if (rand > 40) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
-                    } else if (spawn < 81) {
-                        for (int i = 1; 5 > i; i++) {
-                            LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                            entity.getEquipment().setHelmet(plugin.pumpkin());
-                            entity.getEquipment().setHelmetDropChance(80.0F);
-                            entity.getEquipment().setChestplateDropChance(0.0F);
-                            entity.getEquipment().setLeggingsDropChance(0.0F);
-                            entity.getEquipment().setBootsDropChance(0.0F);
-                            entity.getEquipment().setItemInMainHandDropChance(0.0F);
-                            entity.setCanPickupItems(true);
+                    } else if (spawn > 50) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CREEPER);
+                        rand = random.ints(1, 100).findFirst().getAsInt();
+                    } else if (spawn > 45) {
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                    } else if (spawn > 35) {
+                        for (int i = 1; 16 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.HUSK);
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 30) {
+                        for (int i = 1; 9 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.STRAY);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 40) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 20) {
+                        za_warudo.spawnEntity(loc, EntityType.EVOKER);
+                    } else if (spawn > 15) {
+                        for (int i = 1; 4 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.WITHER_SKELETON);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
                             } else if (rand > 75) {
                                 ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                                entity.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
                             } else if (rand > 65) {
                                 ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
                             } else if (rand > 50) {
                                 ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
                             } else if (rand > 40) {
                                 ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                             } else if (rand > 30) {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setChestplate(aboba);
                             } else {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
                             }
 
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                             } else if (rand > 75) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             } else if (rand > 70) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
                             } else if (rand > 60) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
                             } else if (rand > 55) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
                             } else if (rand > 45) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
                             } else if (rand > 30) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
                             } else if (rand > 25) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
                             } else if (rand > 20) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
                             } else {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
                             }
 
                             rand = random.ints(1, 100).findFirst().getAsInt();
-                            if (rand > 80) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                            } else if (rand > 75) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
-                            } else if (rand > 70) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
-                            } else if (rand > 60) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
-                            } else if (rand > 55) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
-                            } else if (rand > 45) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
-                            } else if (rand > 30) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
-                            } else if (rand > 25) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
-                            } else if (rand > 20) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
-                            } else {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                             }
                         }
+                    } else if (spawn < 5) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.RAVAGER);
+                        ent.setMaxHealth(1000.0F);
+                        ent.setHealth(1000.0F);
                     } else {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                        for (int i = 1; 11 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
                     }
                     prosto = 1;
@@ -682,15 +936,128 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 61) {
-                        for (int i = 1; 3 > i; i++) {
+                    if (spawn > 85) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CAVE_SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 80) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 75) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 60) {
+                        for (int i = 1; 6 > i; i++) {
                             LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
                             ent.getEquipment().setHelmet(plugin.pumpkin());
                             ent.getEquipment().setHelmetDropChance(80.0F);
-                            ent.getEquipment().setChestplateDropChance(0.0F);
-                            ent.getEquipment().setLeggingsDropChance(0.0F);
-                            ent.getEquipment().setBootsDropChance(0.0F);
-                            ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
                             ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -747,226 +1114,217 @@ public class PlayerMove implements Listener {
                             } else if (rand > 40) {
                                 ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             }
-                        }
-                    } else if (spawn < 71) {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
-                        ent.getEquipment().setHelmet(plugin.pumpkin());
-                        ent.getEquipment().setHelmetDropChance(80.0F);
-                        ent.getEquipment().setChestplateDropChance(0.0F);
-                        ent.getEquipment().setLeggingsDropChance(0.0F);
-                        ent.getEquipment().setBootsDropChance(0.0F);
-                        ent.getEquipment().setItemInMainHandDropChance(0.0F);
-                        ent.setCanPickupItems(true);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        int ench = random.ints(0, 4).findFirst().getAsInt();
-                        if (rand > 80) {
-                            ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                        } else if (rand > 75) {
-                            ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                        } else if (rand > 65) {
-                            ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-                        } else if (rand > 50) {
-                            ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
-                        } else if (rand > 40) {
-                            ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                        } else if (rand > 30) {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                        } else {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-                        }
 
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 80) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                        } else if (rand > 75) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
-                        } else if (rand > 70) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
-                        } else if (rand > 60) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
-                        } else if (rand > 55) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
-                        } else if (rand > 45) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
-                        } else if (rand > 30) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
-                        } else if (rand > 25) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
-                        } else if (rand > 20) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
-                        } else {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
+                    } else if (spawn > 50) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CREEPER);
+                        rand = random.ints(1, 100).findFirst().getAsInt();
+                    } else if (spawn > 45) {
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                    } else if (spawn > 35) {
+                        for (int i = 1; 16 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.HUSK);
 
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 60) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                        } else if (rand > 40) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
-                    } else if (spawn < 81) {
-                        for (int i = 1; 5 > i; i++) {
-                            LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                            entity.getEquipment().setHelmet(plugin.pumpkin());
-                            entity.getEquipment().setHelmetDropChance(80.0F);
-                            entity.getEquipment().setChestplateDropChance(0.0F);
-                            entity.getEquipment().setLeggingsDropChance(0.0F);
-                            entity.getEquipment().setBootsDropChance(0.0F);
-                            entity.getEquipment().setItemInMainHandDropChance(0.0F);
-                            entity.setCanPickupItems(true);
+                    } else if (spawn > 30) {
+                        for (int i = 1; 9 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.STRAY);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 40) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 20) {
+                        za_warudo.spawnEntity(loc, EntityType.EVOKER);
+                    } else if (spawn > 15) {
+                        for (int i = 1; 4 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.WITHER_SKELETON);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
                             } else if (rand > 75) {
                                 ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                                entity.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
                             } else if (rand > 65) {
                                 ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
                             } else if (rand > 50) {
                                 ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
                             } else if (rand > 40) {
                                 ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                             } else if (rand > 30) {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setChestplate(aboba);
                             } else {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
                             }
 
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                             } else if (rand > 75) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             } else if (rand > 70) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
                             } else if (rand > 60) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
                             } else if (rand > 55) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
                             } else if (rand > 45) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
                             } else if (rand > 30) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
                             } else if (rand > 25) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
                             } else if (rand > 20) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
                             } else {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                             }
                         }
+                    } else if (spawn < 5) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.RAVAGER);
+                        ent.setMaxHealth(1000.0F);
+                        ent.setHealth(1000.0F);
                     } else {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                        for (int i = 1; 11 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
                     }
                 } else if (coords.getZ() > z - 10) {
@@ -994,15 +1352,128 @@ public class PlayerMove implements Listener {
                     int spawn = random.ints(1, 100).findFirst().getAsInt();
                     World za_warudo = player.getWorld();
 
-                    if (spawn < 61) {
-                        for (int i = 1; 3 > i; i++) {
+                    if (spawn > 85) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CAVE_SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 80) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SPIDER);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 70) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            } else if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            } else if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 75) {
+                        for (int i = 1; 6 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 60) {
+                        for (int i = 1; 6 > i; i++) {
                             LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
                             ent.getEquipment().setHelmet(plugin.pumpkin());
                             ent.getEquipment().setHelmetDropChance(80.0F);
-                            ent.getEquipment().setChestplateDropChance(0.0F);
-                            ent.getEquipment().setLeggingsDropChance(0.0F);
-                            ent.getEquipment().setBootsDropChance(0.0F);
-                            ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
                             ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -1059,203 +1530,217 @@ public class PlayerMove implements Listener {
                             } else if (rand > 40) {
                                 ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             }
-                        }
-                    } else if (spawn < 71) {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.SKELETON);
-                        ent.getEquipment().setHelmet(plugin.pumpkin());
-                        ent.getEquipment().setHelmetDropChance(80.0F);
-                        ent.getEquipment().setChestplateDropChance(0.0F);
-                        ent.getEquipment().setLeggingsDropChance(0.0F);
-                        ent.getEquipment().setBootsDropChance(0.0F);
-                        ent.getEquipment().setItemInMainHandDropChance(0.0F);
-                        ent.setCanPickupItems(true);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        int ench = random.ints(0, 4).findFirst().getAsInt();
-                        if (rand > 80) {
-                            ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                        } else if (rand > 75) {
-                            ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                        } else if (rand > 65) {
-                            ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-                        } else if (rand > 50) {
-                            ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
-                        } else if (rand > 40) {
-                            ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                        } else if (rand > 30) {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                        } else {
-                            ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
-                            ItemMeta boba = aboba.getItemMeta();
-                            boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
-                            aboba.setItemMeta(boba);
-                            ent.getEquipment().setChestplate(aboba);
-                            ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-                        }
 
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 60) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-                        } else if (rand > 40) {
-                            ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
-                    } else if (spawn < 81) {
-                        for (int i = 1; 5 > i; i++) {
-                            LivingEntity entity = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                            entity.getEquipment().setHelmet(plugin.pumpkin());
-                            entity.getEquipment().setHelmetDropChance(80.0F);
-                            entity.getEquipment().setChestplateDropChance(0.0F);
-                            entity.getEquipment().setLeggingsDropChance(0.0F);
-                            entity.getEquipment().setBootsDropChance(0.0F);
-                            entity.getEquipment().setItemInMainHandDropChance(0.0F);
-                            entity.setCanPickupItems(true);
+                    } else if (spawn > 50) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.CREEPER);
+                        rand = random.ints(1, 100).findFirst().getAsInt();
+                    } else if (spawn > 45) {
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                        za_warudo.spawnEntity(loc, EntityType.WITCH);
+                    } else if (spawn > 35) {
+                        for (int i = 1; 16 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.HUSK);
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 30) {
+                        for (int i = 1; 9 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.STRAY);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 40) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
+                        }
+                    } else if (spawn > 20) {
+                        za_warudo.spawnEntity(loc, EntityType.EVOKER);
+                    } else if (spawn > 15) {
+                        for (int i = 1; 4 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.WITHER_SKELETON);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             int ench = random.ints(0, 4).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
                             } else if (rand > 75) {
                                 ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                                entity.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
                             } else if (rand > 65) {
                                 ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
                             } else if (rand > 50) {
                                 ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
                             } else if (rand > 40) {
                                 ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                             } else if (rand > 30) {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setChestplate(aboba);
                             } else {
                                 ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
                                 ItemMeta boba = aboba.getItemMeta();
                                 boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
                                 aboba.setItemMeta(boba);
-                                entity.getEquipment().setChestplate(aboba);
-                                entity.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
                             }
 
                             rand = random.ints(1, 100).findFirst().getAsInt();
                             if (rand > 80) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                             } else if (rand > 75) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
                             } else if (rand > 70) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
                             } else if (rand > 60) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
                             } else if (rand > 55) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
                             } else if (rand > 45) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
                             } else if (rand > 30) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
                             } else if (rand > 25) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
                             } else if (rand > 20) {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
                             } else {
-                                entity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 50) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
                             }
                         }
+                    } else if (spawn < 5) {
+                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.RAVAGER);
+                        ent.setMaxHealth(1000.0F);
+                        ent.setHealth(1000.0F);
                     } else {
-                        LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
-                        }
-                        ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
-                        rand = random.ints(1, 100).findFirst().getAsInt();
-                        if (rand > 30) {
-                            ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                        for (int i = 1; 11 > i; i++) {
+                            LivingEntity ent = (LivingEntity) za_warudo.spawnEntity(loc, EntityType.ZOMBIE);
+                            ent.getEquipment().setHelmet(plugin.pumpkin());
+                            ent.getEquipment().setHelmetDropChance(80.0F);
+                            ent.getEquipment().setChestplateDropChance(50.0F);
+                            ent.getEquipment().setLeggingsDropChance(50.0F);
+                            ent.getEquipment().setBootsDropChance(50.0F);
+                            ent.getEquipment().setItemInMainHandDropChance(50.0F);
+                            ent.setCanPickupItems(true);
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            int ench = random.ints(0, 4).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                            } else if (rand > 75) {
+                                ItemStack aboba = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
+                                ent.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+                            } else if (rand > 65) {
+                                ItemStack aboba = new ItemStack(Material.IRON_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+                            } else if (rand > 50) {
+                                ItemStack aboba = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+                            } else if (rand > 40) {
+                                ItemStack aboba = new ItemStack(Material.DIAMOND_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            } else if (rand > 30) {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                            } else {
+                                ItemStack aboba = new ItemStack(Material.NETHERITE_CHESTPLATE);
+                                ItemMeta boba = aboba.getItemMeta();
+                                boba.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, ench, false);
+                                aboba.setItemMeta(boba);
+                                ent.getEquipment().setChestplate(aboba);
+                                ent.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 80) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                            } else if (rand > 75) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_AXE));
+                            } else if (rand > 70) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+                            } else if (rand > 60) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+                            } else if (rand > 55) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                            } else if (rand > 45) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.GOLDEN_AXE));
+                            } else if (rand > 30) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                            } else if (rand > 25) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+                            } else if (rand > 20) {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+                            } else {
+                                ent.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
+                            }
+
+                            rand = random.ints(1, 100).findFirst().getAsInt();
+                            if (rand > 30) {
+                                ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 1));
+                            }
                         }
                     }
                 }

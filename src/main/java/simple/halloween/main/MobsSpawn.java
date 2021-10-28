@@ -44,6 +44,7 @@ public class MobsSpawn implements Listener {
                 if (coords.getBlock().getType() == Material.WATER) return;
                 if (coords.getY() < 39) return;
                 if (coords.getY() > 109) return;
+                if (!event.getEntity().getWorld().getName().equals("world")) return;
                 if (rand > 85) {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.CAVE_SPIDER);
                     rand = random.ints(1, 100).findFirst().getAsInt();
@@ -70,10 +71,10 @@ public class MobsSpawn implements Listener {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.ZOMBIE);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
-                    ent.getEquipment().setChestplateDropChance(0.0F);
-                    ent.getEquipment().setLeggingsDropChance(0.0F);
-                    ent.getEquipment().setBootsDropChance(0.0F);
-                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                    ent.getEquipment().setChestplateDropChance(50.0F);
+                    ent.getEquipment().setLeggingsDropChance(50.0F);
+                    ent.getEquipment().setBootsDropChance(50.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(50.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -155,10 +156,10 @@ public class MobsSpawn implements Listener {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.SKELETON);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
-                    ent.getEquipment().setChestplateDropChance(0.0F);
-                    ent.getEquipment().setLeggingsDropChance(0.0F);
-                    ent.getEquipment().setBootsDropChance(0.0F);
-                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                    ent.getEquipment().setChestplateDropChance(50.0F);
+                    ent.getEquipment().setLeggingsDropChance(50.0F);
+                    ent.getEquipment().setBootsDropChance(50.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(50.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();
@@ -247,10 +248,10 @@ public class MobsSpawn implements Listener {
                     LivingEntity ent = (LivingEntity) event.getEntity().getWorld().spawnEntity(coords, EntityType.WITHER_SKELETON);
                     ent.getEquipment().setHelmet(plugin.pumpkin());
                     ent.getEquipment().setHelmetDropChance(80.0F);
-                    ent.getEquipment().setChestplateDropChance(0.0F);
-                    ent.getEquipment().setLeggingsDropChance(0.0F);
-                    ent.getEquipment().setBootsDropChance(0.0F);
-                    ent.getEquipment().setItemInMainHandDropChance(0.0F);
+                    ent.getEquipment().setChestplateDropChance(50.0F);
+                    ent.getEquipment().setLeggingsDropChance(50.0F);
+                    ent.getEquipment().setBootsDropChance(50.0F);
+                    ent.getEquipment().setItemInMainHandDropChance(50.0F);
                     ent.setCanPickupItems(true);
                     rand = random.ints(1, 100).findFirst().getAsInt();
                     int ench = random.ints(0, 4).findFirst().getAsInt();
